@@ -1,0 +1,118 @@
+---
+const {
+    title = "Roger Wibrew — Chemical Engineering & AI",
+    description = "Chemical engineering, process simulation, and AI-enabled engineering tools.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+    </head>
+
+    <body>
+        <header class="site-header">
+            <nav class="nav">
+                <a class="brand" href="/">Roger Wibrew</a>
+
+                <div class="links">
+                    <a href="/projects">Projects</a>
+                    <a href="/blog">Blog</a>
+                    <a href="/about">About</a>
+                    <a href="/contact">Contact</a>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <slot />
+        </main>
+
+        <footer class="site-footer">
+            <p>
+                © {new Date().getFullYear()} Roger Wibrew • Chemical Engineering &
+                AI
+            </p>
+        </footer>
+
+        <style>
+            :global(body) {
+                margin: 0;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    Segoe UI,
+                    Roboto,
+                    Helvetica,
+                    Arial,
+                    sans-serif;
+                line-height: 1.5;
+                background: #0b0f14;
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            :global(a) {
+                color: inherit;
+            }
+
+            .site-header {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.02);
+                backdrop-filter: blur(8px);
+            }
+
+            .nav {
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 1rem 1.25rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+            }
+
+            .brand {
+                font-weight: 700;
+                text-decoration: none;
+                letter-spacing: 0.2px;
+            }
+
+            .links {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .links a {
+                text-decoration: none;
+                opacity: 0.9;
+            }
+
+            .links a:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+
+            main {
+                min-height: 70vh;
+            }
+
+            .site-footer {
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                margin-top: 3rem;
+            }
+
+            .site-footer p {
+                max-width: 980px;
+                margin: 0 auto;
+                padding: 1.5rem 1.25rem;
+                opacity: 0.75;
+                font-size: 0.95rem;
+            }
+        </style>
+    </body>
+</html>

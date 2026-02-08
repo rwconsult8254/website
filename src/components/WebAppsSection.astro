@@ -1,0 +1,89 @@
+---
+const webapps = [
+    {
+        title: "Tank Simulation",
+        description:
+            "Dynamic tank model with level, flow, and control behavior.",
+        href: "/apps/tank",
+    },
+    {
+        title: "Amine System Simulation",
+        description:
+            "Absorber/stripper simulation with circulation, loading, and operating cases.",
+        href: "/apps/amine",
+    },
+    {
+        title: "Tennessee Eastman Simulation",
+        description:
+            "Classic Tennessee Eastman process for control and fault studies.",
+        href: "/apps/tennessee-eastman",
+    },
+    {
+        title: "NRTL Vapour–Liquid Equilibrium",
+        description: "VLE calculations using NRTL activity-coefficient models.",
+        href: "/apps/nrtl-vle",
+    },
+];
+---
+
+<section id="webapps" class="webapps">
+    <h2>Web Apps</h2>
+    <p class="subtitle">
+        Interactive chemical engineering simulations and tools.
+    </p>
+
+    <div class="grid">
+        {
+            webapps.map((app) => (
+                <a class="card" href={app.href}>
+                    <h3>{app.title}</h3>
+                    <p>{app.description}</p>
+                    <span class="link">Open →</span>
+                </a>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .webapps {
+        margin: 4rem 0;
+    }
+    .subtitle {
+        opacity: 0.8;
+        margin-bottom: 1.5rem;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.03);
+        text-decoration: none;
+        transition:
+            transform 0.15s ease,
+            border-color 0.15s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .card h3 {
+        margin: 0 0 0.4rem 0;
+    }
+    .card p {
+        margin: 0 0 0.75rem 0;
+        opacity: 0.8;
+    }
+    .link {
+        font-weight: 600;
+    }
+</style>
