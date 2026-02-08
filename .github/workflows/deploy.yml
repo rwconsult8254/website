@@ -44,5 +44,9 @@ jobs:
           timeout: 120s
           command_timeout: 120s
 
+      - name: Restart nginx container
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/portfolio && docker-compose restart portfolio"
+
       - name: Deployment complete
         run: echo "Site deployed to https://rogerwibrew.com"
