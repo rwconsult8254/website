@@ -6,23 +6,6 @@ const webapps = [
             "Dynamic tank model with level, flow, and control behavior.",
         href: "/apps/tank",
     },
-    {
-        title: "Amine System Simulation",
-        description:
-            "Absorber/stripper simulation with circulation, loading, and operating cases.",
-        href: "/apps/amine",
-    },
-    {
-        title: "Tennessee Eastman Simulation",
-        description:
-            "Classic Tennessee Eastman process for control and fault studies.",
-        href: "/apps/tennessee-eastman",
-    },
-    {
-        title: "NRTL Vapour–Liquid Equilibrium",
-        description: "VLE calculations using NRTL activity-coefficient models.",
-        href: "/apps/nrtl-vle",
-    },
 ];
 ---
 
@@ -38,7 +21,7 @@ const webapps = [
                 <a class="card" href={app.href}>
                     <h3>{app.title}</h3>
                     <p>{app.description}</p>
-                    <span class="link">Open →</span>
+                    <span class="link">Open &rarr;</span>
                 </a>
             ))
         }
@@ -49,8 +32,11 @@ const webapps = [
     .webapps {
         margin: 4rem 0;
     }
+    .webapps h2 {
+        margin: 0 0 0.5rem;
+    }
     .subtitle {
-        opacity: 0.8;
+        color: var(--text-secondary);
         margin-bottom: 1.5rem;
     }
 
@@ -61,29 +47,32 @@ const webapps = [
     }
 
     .card {
-        padding: 1.25rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.03);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg-secondary);
         text-decoration: none;
-        transition:
-            transform 0.15s ease,
-            border-color 0.15s ease;
+        color: var(--text-primary);
+        transition: transform 0.15s ease, border-color 0.15s ease;
     }
 
     .card:hover {
-        transform: translateY(-3px);
-        border-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        border-color: var(--border-hover);
     }
 
     .card h3 {
         margin: 0 0 0.4rem 0;
+        font-size: 1.1rem;
     }
     .card p {
         margin: 0 0 0.75rem 0;
-        opacity: 0.8;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
     }
     .link {
         font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--accent);
     }
 </style>

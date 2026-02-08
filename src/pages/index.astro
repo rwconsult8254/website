@@ -7,8 +7,7 @@ import WebAppsSection from "../components/WebAppsSection.astro";
     <main class="container">
         <section class="hero">
             <p class="kicker">
-                Chemical Engineer • Process Simulation • AI-Enabled Engineering
-                Tools
+                Chemical Engineer &middot; Process Simulation &middot; AI-Enabled Engineering Tools
             </p>
             <h1>
                 Combining Traditional Chemical Engineering with Modern AI Tools.
@@ -30,6 +29,15 @@ import WebAppsSection from "../components/WebAppsSection.astro";
 
         <WebAppsSection />
 
+        <section class="work-with-me">
+            <h2>Work With Me</h2>
+            <p>
+                I'm always open to interesting conversations — whether that's collaborating on a project,
+                exploring an idea, or just talking shop about process engineering and ML.
+            </p>
+            <a class="btn primary" href="/contact">Get in touch</a>
+        </section>
+
         <section class="grid">
             <article class="card">
                 <h2>Projects & Apps</h2>
@@ -37,7 +45,7 @@ import WebAppsSection from "../components/WebAppsSection.astro";
                     Small, focused tools that demonstrate modeling assumptions,
                     implementation choices, and usable outputs.
                 </p>
-                <a href="/projects">Explore projects →</a>
+                <a href="/projects">Explore projects &rarr;</a>
             </article>
 
             <article class="card">
@@ -46,16 +54,16 @@ import WebAppsSection from "../components/WebAppsSection.astro";
                     Technical articles on simulation, tank dynamics,
                     thermodynamics, and practical AI workflows.
                 </p>
-                <a href="/blog">Browse posts →</a>
+                <a href="/blog">Browse posts &rarr;</a>
             </article>
 
             <article class="card">
                 <h2>About</h2>
                 <p>
-                    My background, interests, and the direction I’m building
-                    toward: consulting and contract work.
+                    My background, practical experience, and approach to
+                    combining engineering with ML.
                 </p>
-                <a href="/about">Read more →</a>
+                <a href="/about">Read more &rarr;</a>
             </article>
         </section>
     </main>
@@ -71,20 +79,24 @@ import WebAppsSection from "../components/WebAppsSection.astro";
         padding: 1rem 0 2.5rem;
     }
     .kicker {
-        opacity: 0.8;
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
         margin: 0 0 0.75rem;
     }
     h1 {
-        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        font-size: clamp(2rem, 4vw, 3rem);
         line-height: 1.1;
-        margin: 0 0 1rem;
+        margin: 0 0 1.25rem;
+        letter-spacing: -0.02em;
     }
     .lede {
         font-size: 1.1rem;
-        line-height: 1.6;
-        max-width: 70ch;
-        margin: 0 0 1.5rem;
-        opacity: 0.95;
+        line-height: 1.65;
+        max-width: 65ch;
+        margin: 0 0 1.75rem;
+        color: var(--text-secondary);
     }
 
     .cta {
@@ -94,13 +106,45 @@ import WebAppsSection from "../components/WebAppsSection.astro";
     }
     .btn {
         display: inline-block;
-        padding: 0.7rem 1rem;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 0.6rem 1.25rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
         text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.15s ease;
+    }
+    .btn:hover {
+        border-color: var(--border-hover);
+        color: var(--text-primary);
+        background: var(--bg-surface);
     }
     .btn.primary {
-        border-color: rgba(255, 255, 255, 0.35);
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+    }
+    .btn.primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
+    }
+
+    .work-with-me {
+        margin-top: 4rem;
+        padding: 1.5rem;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg-secondary);
+    }
+    .work-with-me h2 {
+        margin: 0 0 0.5rem;
+        font-size: 1.3rem;
+    }
+    .work-with-me p {
+        color: var(--text-secondary);
+        max-width: 60ch;
+        margin: 0 0 1.25rem;
     }
 
     .grid {
@@ -111,21 +155,28 @@ import WebAppsSection from "../components/WebAppsSection.astro";
     }
     .card {
         grid-column: span 12;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 16px;
-        padding: 1.25rem;
-        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        background: var(--bg-secondary);
+        transition: border-color 0.15s ease;
+    }
+    .card:hover {
+        border-color: var(--border-hover);
     }
     .card h2 {
         margin: 0 0 0.5rem;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
     .card p {
         margin: 0 0 0.75rem;
-        opacity: 0.9;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
     }
     .card a {
         text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
     }
 
     @media (min-width: 800px) {

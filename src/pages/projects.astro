@@ -11,21 +11,6 @@ const projects = [
                 label: "Write-up",
                 href: "/blog/tank-dynamics-simulation-part-1",
             },
-            { label: "Demo", href: "#" },
-            { label: "GitHub", href: "#" },
-        ],
-    },
-    {
-        title: "Simple Process Thermodynamics Explorer",
-        summary:
-            "A lightweight tool for sanity-checking thermodynamic relationships in simple process simulations.",
-        links: [
-            {
-                label: "Write-up",
-                href: "/blog/thermodynamics-behind-simple-process-simulation",
-            },
-            { label: "Demo", href: "#" },
-            { label: "GitHub", href: "#" },
         ],
     },
 ];
@@ -65,8 +50,8 @@ const projects = [
             padding: 3rem 1.25rem;
         }
         .head p {
-            opacity: 0.9;
-            max-width: 75ch;
+            color: var(--text-secondary);
+            max-width: 65ch;
         }
         .list {
             display: grid;
@@ -74,13 +59,22 @@ const projects = [
             margin-top: 1.5rem;
         }
         .card {
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
-            padding: 1.25rem;
-            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            transition: border-color 0.15s ease;
+        }
+        .card:hover {
+            border-color: var(--border-hover);
         }
         .card h2 {
             margin: 0 0 0.5rem;
+            font-size: 1.2rem;
+        }
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
         .links {
             display: flex;
@@ -90,7 +84,8 @@ const projects = [
         }
         .links a {
             text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            font-weight: 500;
+            font-size: 0.9rem;
         }
     </style>
 </Layout>

@@ -6,22 +6,47 @@ import Layout from "../layouts/Layout.astro";
   <main class="container">
     <h1>About</h1>
     <p>
-      I’m a chemical engineer focused on <strong>process simulation</strong>, <strong>dynamic systems</strong>, and
-      <strong>engineering software</strong>. My work connects fundamental modeling (thermodynamics and system dynamics)
-      with modern implementation (web apps, automation, and AI-assisted development).
+      I'm a chemical engineer with <strong>years of hands-on process experience</strong>, now combining that
+      practical knowledge with <strong>machine learning</strong> and <strong>modern software tools</strong>.
+      The combination matters — ML models are only as good as the domain understanding behind them, and
+      I bring both.
+    </p>
+    <p>
+      My work connects fundamental modeling (thermodynamics and system dynamics) with modern implementation
+      (web apps, automation, and AI-assisted development). I focus on <strong>process simulation</strong>,
+      <strong>dynamic systems</strong>, and <strong>engineering software</strong> that solves real problems.
     </p>
     <p>
       This site is a growing portfolio of technical writing and small tools that demonstrate how I approach problems:
       define assumptions clearly, build models that can be tested, and deliver outputs people can actually use.
     </p>
+
+    <h2>Work With Me</h2>
     <p>
-      Over time, this website will evolve into a professional services platform as I move into consulting and contract work.
+      I'm always open to interesting conversations — whether that's collaborating on a project,
+      exploring an idea, or just talking shop about process engineering and ML.
     </p>
+    <a class="work-btn" href="/contact">Get in touch &rarr;</a>
   </main>
 
   <style>
-    .container { max-width: 820px; margin: 0 auto; padding: 3rem 1.25rem; }
-    h1 { margin: 0 0 1rem; }
-    p { line-height: 1.7; }
+    .container { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem; }
+    h1 { margin: 0 0 1.5rem; }
+    p { line-height: 1.75; color: var(--text-secondary); }
+    strong { color: var(--text-primary); }
+    h2 { margin: 2.5rem 0 0.75rem; }
+    .work-btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.15s ease;
+    }
+    .work-btn:hover { background: var(--accent-hover); color: #fff; }
   </style>
 </Layout>

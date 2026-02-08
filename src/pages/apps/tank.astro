@@ -2,9 +2,24 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="Tank Simulation">
-    <main>
+<Layout title="Tank Simulation — Roger Wibrew">
+    <main class="container">
         <h1>Tank Simulation</h1>
-        <p>This web app is coming online soon.</p>
+        <p>This web app is coming soon.</p>
+        <a href="/projects">&larr; Back to projects</a>
     </main>
+
+    <style>
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 1.25rem;
+        }
+        p {
+            color: var(--text-secondary);
+        }
+        a {
+            font-size: 0.9rem;
+        }
+    </style>
 </Layout>
