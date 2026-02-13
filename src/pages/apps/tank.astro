@@ -4,8 +4,14 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="Tank Simulation — Roger Wibrew">
     <main class="container">
-        <h1>Tank Simulation</h1>
-        <p>This web app is coming soon.</p>
+        <h1>Tank Dynamics Simulator</h1>
+        <p>
+            A real-time SCADA-style interface for a first-principles tank level
+            control simulation with PID feedback.
+        </p>
+        <a class="launch" href="https://tank.rogerwibrew.com">
+            Launch Simulator &rarr;
+        </a>
         <a href="/projects">&larr; Back to projects</a>
     </main>
 
@@ -17,8 +23,24 @@ import Layout from "../../layouts/Layout.astro";
         }
         p {
             color: var(--text-secondary);
+            max-width: 55ch;
         }
-        a {
+        .launch {
+            display: inline-block;
+            margin: 1.5rem 0;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.15s ease;
+        }
+        .launch:hover {
+            opacity: 0.85;
+        }
+        a:last-child {
+            display: block;
             font-size: 0.9rem;
         }
     </style>
