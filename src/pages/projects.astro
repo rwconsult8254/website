@@ -1,23 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const projects = [
-    {
-        title: "Tank Dynamics Simulator",
-        summary:
-            "A first-principles dynamic model with interactive parameters and plots. Part 1 in a series.",
-        links: [
-            {
-                label: "Write-up",
-                href: "/blog/tank-dynamics-simulation-part-1",
-            },
-            {
-                label: "Live Demo",
-                href: "https://tank.rogerwibrew.com",
-            },
-        ],
-    },
-];
 ---
 
 <Layout title="Projects — Roger Wibrew">
@@ -30,21 +12,203 @@ const projects = [
             </p>
         </header>
 
-        <section class="list">
-            {
-                projects.map((p) => (
-                    <article class="card">
-                        <h2>{p.title}</h2>
-                        <p>{p.summary}</p>
-                        <div class="links">
-                            {p.links.map((l) => (
-                                <a href={l.href}>{l.label}</a>
-                            ))}
-                        </div>
-                    </article>
-                ))
-            }
-        </section>
+        <article class="project">
+            <div class="project-header">
+                <h2>Tank Dynamics Simulator</h2>
+                <a class="launch-btn" href="https://tank.rogerwibrew.com">Live Demo</a>
+            </div>
+
+            <div class="prose">
+                <p>A real-time process simulation of a liquid tank with PID level control, running as a web application. A C++ physics engine solves the differential equations on the server and streams results to your browser over a WebSocket at ~1&nbsp;Hz.</p>
+
+                <p>You can change the level setpoint, retune the PID controller, and introduce flow disturbances — then watch the system respond in real time. The interface follows ISA-101 conventions used in industrial control rooms.</p>
+
+                <p><strong>No login required. Each browser session runs its own independent simulation instance.</strong></p>
+
+                <h3>The Interface</h3>
+
+                <p>The simulator has three tabs along the top: <strong>Process</strong>, <strong>Trends</strong>, and <strong>Upsets</strong>. A connection indicator in the top-right corner shows whether your browser is connected to the simulation engine (green&nbsp;=&nbsp;connected).</p>
+
+                <h3>Process Tab</h3>
+
+                <p>The Process tab is the main view. It shows a schematic of the tank system with live instrument readings.</p>
+
+                <ul>
+                    <li>A <strong>tank</strong> with animated liquid fill level (blue). Scale markings on the left run from 0 to 5 metres.</li>
+                    <li>An <strong>inlet pipe</strong> (top-left) carrying liquid into the tank.</li>
+                    <li>An <strong>outlet pipe</strong> (right) with a <strong>control valve</strong> (shown as the standard ISA bow-tie symbol).</li>
+                    <li>A <strong>dashed control signal line</strong> from the controller faceplate to the valve.</li>
+                </ul>
+
+                <h4>Instrument Tags</h4>
+
+                <table>
+                    <thead>
+                        <tr><th>Tag</th><th>Name</th><th>What It Shows</th><th>Units</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>FI-100</strong></td><td>Inlet Flow</td><td>Flow rate entering the tank</td><td>m³/s</td></tr>
+                        <tr><td><strong>LI-100</strong></td><td>Level Indicator</td><td>Current liquid level in the tank</td><td>m</td></tr>
+                        <tr><td><strong>FI-101</strong></td><td>Outlet Flow</td><td>Flow rate leaving through the valve</td><td>m³/s</td></tr>
+                        <tr><td><strong>VP-100</strong></td><td>Valve Position</td><td>How far open the control valve is</td><td>%</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Controller Faceplate (LIC-100)</h4>
+
+                <p>The controller faceplate sits to the right of the tank and is the main control interface. It displays four values:</p>
+
+                <ul>
+                    <li><strong>PV</strong> (Process Variable) — the current tank level (measured).</li>
+                    <li><strong>SP</strong> (Setpoint) — the target level. <strong>This is editable</strong> — click the field, type a value between 0 and 5 metres, and press Enter.</li>
+                    <li><strong>OP</strong> (Output) — the controller output signal driving the valve (0–100%).</li>
+                    <li><strong>Err</strong> (Error) — the difference between PV and SP. Colour-coded:
+                        <ul>
+                            <li><strong>Grey</strong>: |error| &lt; 0.2 m — system is close to setpoint.</li>
+                            <li><strong>Yellow</strong>: 0.2 ≤ |error| &lt; 0.5 m — moderate deviation.</li>
+                            <li><strong>Red</strong>: |error| ≥ 0.5 m — large deviation, controller is working hard.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Changing the Setpoint</h4>
+
+                <ol>
+                    <li>Click the <strong>SP</strong> field on the LIC-100 faceplate.</li>
+                    <li>Type a new value (e.g. <code>3.0</code>). Range: 0.0 to 5.0 metres.</li>
+                    <li>Press <strong>Enter</strong> or click away.</li>
+                </ol>
+
+                <p>The controller will begin adjusting the valve to bring the level to the new setpoint. Watch the error indicator change colour as the system responds.</p>
+
+                <h4>Tuning the PID Controller</h4>
+
+                <p>Click the <strong>gear icon</strong> (⚙) on the LIC-100 faceplate to open the PID tuning panel. Three parameters are available:</p>
+
+                <table>
+                    <thead>
+                        <tr><th>Parameter</th><th>Symbol</th><th>Description</th><th>Default</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Proportional Gain</td><td><strong>Kc</strong></td><td>How aggressively the controller reacts to error</td><td>~1.0</td></tr>
+                        <tr><td>Integral Time</td><td><strong>Ti</strong></td><td>How quickly past error is corrected (seconds)</td><td>~10.0 s</td></tr>
+                        <tr><td>Derivative Time</td><td><strong>Td</strong></td><td>How much the controller anticipates future error (seconds)</td><td>~1.0 s</td></tr>
+                    </tbody>
+                </table>
+
+                <p>There is also a <strong>Reverse Acting</strong> checkbox. This should remain checked for this system — opening the outlet valve <em>decreases</em> the tank level, so the controller action is reversed.</p>
+
+                <p>Click <strong>Apply</strong> to send the new gains to the simulation. The effect is immediate.</p>
+
+                <h3>Trends Tab</h3>
+
+                <p>The Trends tab shows historical charts of the simulation. Select a time range using the buttons at the top:</p>
+
+                <p><strong>1 min</strong> · <strong>5 min</strong> · <strong>30 min</strong> · <strong>1 hr</strong> (default) · <strong>2 hr</strong></p>
+
+                <h4>Chart 1: Tank Level vs Setpoint</h4>
+
+                <p>Two lines on the same axes (0–5 m):</p>
+                <ul>
+                    <li><strong>Blue solid line</strong> — actual tank level (PV).</li>
+                    <li><strong>Red dashed line</strong> — setpoint (SP).</li>
+                </ul>
+
+                <p>This is the most useful chart for seeing how well the controller tracks the setpoint after a change or disturbance.</p>
+
+                <h4>Chart 2: Inlet and Outlet Flows</h4>
+
+                <p>Two lines (0–2 m³/s):</p>
+                <ul>
+                    <li><strong>Cyan line</strong> — inlet flow.</li>
+                    <li><strong>Orange line</strong> — outlet flow.</li>
+                </ul>
+
+                <p>When the system is at steady state, these two flows are approximately equal. During transients, you can see the outlet flow (controlled by the valve) adjusting to match the inlet.</p>
+
+                <h4>Chart 3: Controller Output (Valve Position)</h4>
+
+                <p>Single <strong>purple line</strong> (0–100%). Shows how the controller is manipulating the valve over time. Useful for spotting saturation (valve fully open or fully closed) and oscillatory behaviour from aggressive tuning.</p>
+
+                <p>All charts are interactive — hover for tooltips, click legend entries to toggle series on/off.</p>
+
+                <h3>Upsets Tab</h3>
+
+                <p>The Upsets tab lets you configure the inlet flow to the tank, simulating process disturbances.</p>
+
+                <h4>Constant Mode</h4>
+
+                <p>Sets the inlet flow to a fixed value. Enter a flow rate between 0.0 and 2.0 m³/s and click <strong>Apply</strong>.</p>
+
+                <p>Use this to create a step change: the inlet flow jumps instantly to the new value, and you can switch to the Trends tab to watch the controller respond.</p>
+
+                <h4>Brownian Mode</h4>
+
+                <p>Simulates a realistic, continuously varying inlet flow using a random walk (Brownian motion). Configure three parameters:</p>
+
+                <table>
+                    <thead>
+                        <tr><th>Parameter</th><th>Description</th><th>Default</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Min Flow</strong></td><td>Lower bound for the random walk (m³/s)</td><td>0.8</td></tr>
+                        <tr><td><strong>Max Flow</strong></td><td>Upper bound for the random walk (m³/s)</td><td>1.2</td></tr>
+                        <tr><td><strong>Variance</strong></td><td>How much the flow fluctuates each step</td><td>0.05</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Click <strong>Apply</strong> to start. The inlet flow will wander randomly within the bounds, creating a continuous disturbance that the PID controller must reject. This is a more realistic simulation of what happens in a real process — feed flows are never perfectly constant.</p>
+
+                <h3>The Physics Model</h3>
+
+                <p>The simulation solves the following system in real time:</p>
+
+                <p><strong>Material balance</strong> — the rate of change of liquid level depends on the difference between inlet and outlet flow:</p>
+
+                <div class="equation" id="eq-material-balance"></div>
+
+                <p><strong>Gravity-driven outlet</strong> — the outlet flow depends on both the valve opening and the current liquid level (higher level = more head = more flow):</p>
+
+                <div class="equation" id="eq-outlet-flow"></div>
+
+                <p>where <em>x</em> is the valve opening (0–1) and <em>k<sub>v</sub></em> is a valve coefficient.</p>
+
+                <p><strong>PID control</strong> — the controller calculates the valve opening based on the error between setpoint and measured level, using proportional, integral, and derivative terms with output saturation (valve cannot go below 0% or above 100%).</p>
+
+                <p>The ODEs are integrated using a 4th-order Runge-Kutta method (RK4) via the GNU Scientific Library. The simulation runs in C++ for performance, with Python/FastAPI serving the WebSocket API.</p>
+
+                <h3>Things to Try</h3>
+
+                <p>Here are some experiments to explore how the system behaves:</p>
+
+                <ol>
+                    <li><strong>Step change response</strong> — Set the level to 1.0 m, let it settle, then change the setpoint to 3.0 m. Watch how the controller opens the valve less (or closes it) to let the tank fill, then gradually returns to steady state.</li>
+                    <li><strong>Aggressive tuning</strong> — Increase Kc to 5.0 or higher. The system will oscillate — the valve overreacts, the level overshoots, and the cycle repeats. This is what "poorly tuned" looks like.</li>
+                    <li><strong>Slow integral action</strong> — Set Ti to 100 s (or higher). The controller will reach the setpoint eventually, but the offset will persist for a long time. Reduce Ti to 5 s and the offset disappears faster but with more overshoot.</li>
+                    <li><strong>Remove integral entirely</strong> — Set Ti to 0. The controller becomes P-only and will settle at a permanent offset from the setpoint. This demonstrates why integral action exists.</li>
+                    <li><strong>Brownian disturbance rejection</strong> — Switch to Brownian mode on the Upsets tab with default settings. Watch the Trends tab — you'll see the inlet flow wandering and the controller continuously adjusting the valve to keep the level near setpoint.</li>
+                    <li><strong>Valve saturation</strong> — Set a very low setpoint (e.g. 0.5 m) with a high inlet flow (e.g. 1.5 m³/s). The valve may fully open and still not be able to drain fast enough — the controller output hits 100% and the level rises above the setpoint. This is a real operational constraint.</li>
+                    <li><strong>Derivative action</strong> — Set Td to 0 and make a setpoint change. Then set Td to 2.0 and repeat. With derivative action, the initial response is faster and overshoot is reduced — the controller "anticipates" the level approaching the setpoint and backs off early.</li>
+                </ol>
+
+                <h3>Technical Stack</h3>
+
+                <table>
+                    <thead>
+                        <tr><th>Layer</th><th>Technology</th><th>Role</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Physics engine</td><td>C++ with GSL</td><td>Solves ODEs (RK4)</td></tr>
+                        <tr><td>Python bridge</td><td>pybind11</td><td>Exposes C++ simulation to Python</td></tr>
+                        <tr><td>API server</td><td>FastAPI</td><td>WebSocket endpoint, REST config</td></tr>
+                        <tr><td>Frontend</td><td>Next.js + React + Recharts</td><td>Real-time UI and charting</td></tr>
+                        <tr><td>Deployment</td><td>Docker + Traefik on VPS</td><td>Containerised with auto-HTTPS</td></tr>
+                    </tbody>
+                </table>
+
+                <p>Each browser session creates an independent simulation instance on the server. Your changes don't affect other users.</p>
+            </div>
+        </article>
     </main>
 
     <style>
@@ -57,39 +221,120 @@ const projects = [
             color: var(--text-secondary);
             max-width: 65ch;
         }
-        .list {
-            display: grid;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .card {
+        .project {
+            margin-top: 2rem;
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 2rem;
             background: var(--bg-secondary);
-            transition: border-color 0.15s ease;
         }
-        .card:hover {
-            border-color: var(--border-hover);
-        }
-        .card h2 {
-            margin: 0 0 0.5rem;
-            font-size: 1.2rem;
-        }
-        .card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-        .links {
+        .project-header {
             display: flex;
-            gap: 0.75rem;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
             flex-wrap: wrap;
-            margin-top: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .links a {
+        .project-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .launch-btn {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.15s ease;
+        }
+        .launch-btn:hover {
+            background: var(--accent-hover);
+        }
+        .prose {
+            line-height: 1.75;
+            max-width: 720px;
+        }
+        .prose h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+        .prose h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+        .prose p {
+            color: var(--text-secondary);
+            margin: 0.75rem 0;
+        }
+        .prose ul, .prose ol {
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            margin: 0.75rem 0;
+        }
+        .prose li {
+            margin: 0.4rem 0;
+        }
+        .prose table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
             font-size: 0.9rem;
         }
+        .prose th, .prose td {
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .prose th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+        }
+        .prose td {
+            color: var(--text-secondary);
+        }
+        .equation {
+            margin: 1.25rem 0;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            text-align: center;
+        }
+        .prose code {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .prose strong {
+            color: var(--text-primary);
+        }
+        .prose a {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
     </style>
+
+    <link slot="head" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <script slot="head" is:inline src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', function() {
+            var equations = {
+                'eq-material-balance': '\\frac{dh}{dt} = \\frac{1}{A}\\left(q_{\\text{in}} - q_{\\text{out}}\\right)',
+                'eq-outlet-flow': 'q_{\\text{out}} = k_v \\cdot x \\cdot \\sqrt{h}'
+            };
+            Object.keys(equations).forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) katex.render(equations[id], el, { displayMode: true, throwOnError: false });
+            });
+        });
+    </script>
 </Layout>
