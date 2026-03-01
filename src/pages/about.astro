@@ -6,19 +6,27 @@ import Layout from "../layouts/Layout.astro";
   <main class="container">
     <h1>About</h1>
     <p>
-      I'm a chemical engineer with <strong>years of hands-on process experience</strong>, now combining that
-      practical knowledge with <strong>machine learning</strong> and <strong>modern software tools</strong>.
-      The combination matters — ML models are only as good as the domain understanding behind them, and
-      I bring both.
+      I'm a chemical engineer with <strong>25 years of hands-on process operations experience</strong>,
+      now combining that knowledge with <strong>machine learning</strong> and
+      <strong>modern software engineering</strong>. The combination matters — ML models are only
+      as good as the domain understanding behind them, and I bring both.
     </p>
     <p>
-      My work connects fundamental modeling (thermodynamics and system dynamics) with modern implementation
-      (web apps, automation, and AI-assisted development). I focus on <strong>process simulation</strong>,
-      <strong>dynamic systems</strong>, and <strong>engineering software</strong> that solves real problems.
+      My background spans process operations across multiple industries. I hold
+      an <strong>MS in Computer Science with a specialisation in artificial intelligence</strong>,
+      which gives me the tools to bridge engineering fundamentals with data-driven methods.
     </p>
     <p>
-      This site is a growing portfolio of technical writing and small tools that demonstrate how I approach problems:
-      define assumptions clearly, build models that can be tested, and deliver outputs people can actually use.
+      My work connects first-principles modeling — thermodynamics, fluid dynamics, control
+      theory — with modern implementation: web applications, real-time simulation, and
+      AI-assisted analysis. I focus on <strong>process simulation</strong>,
+      <strong>dynamic systems</strong>, and <strong>engineering software</strong> that solves
+      operational problems across process industries.
+    </p>
+    <p>
+      This site is a growing portfolio of technical writing and working tools that show how
+      I approach problems: define the assumptions clearly, build models that can be tested,
+      and deliver outputs that people can actually use in the field.
     </p>
 
     <h2>Work With Me</h2>
@@ -30,7 +38,7 @@ import Layout from "../layouts/Layout.astro";
   </main>
 
   <style>
-    .container { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem; }
+    .container { max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
     h1 { margin: 0 0 1.5rem; }
     p { line-height: 1.75; color: var(--text-secondary); }
     strong { color: var(--text-primary); }
@@ -38,15 +46,19 @@ import Layout from "../layouts/Layout.astro";
     .work-btn {
       display: inline-block;
       margin-top: 0.5rem;
-      padding: 0.6rem 1.25rem;
+      padding: 0.65rem 1.35rem;
       border-radius: 8px;
       background: var(--accent);
-      color: #fff;
+      color: #0b0d12;
       text-decoration: none;
       font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.15s ease;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
-    .work-btn:hover { background: var(--accent-hover); color: #fff; }
+    .work-btn:hover {
+      background: var(--accent-hover);
+      color: #0b0d12;
+      box-shadow: 0 0 24px rgba(201, 126, 58, 0.2);
+    }
   </style>
 </Layout>
