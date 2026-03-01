@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Comments from '../components/Comments.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Layout from './Layout.astro';
 
@@ -27,6 +28,8 @@ const { title, description, pubDate, updatedDate } = Astro.props;
 			<slot />
 		</div>
 	</article>
+
+	<Comments />
 
 	<style>
 		.post {
